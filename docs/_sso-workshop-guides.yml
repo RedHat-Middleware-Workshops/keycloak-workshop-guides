@@ -1,0 +1,32 @@
+id: "sso-workshop"
+name: "Red Hat SSO - From zero to hero"
+
+content:
+  url: https://github.com/RedHat-Middleware-Workshops/sso-workshop-guides.git
+
+vars:
+  ROUTE_SUBDOMAIN:
+  MASTER_URL:
+  CONSOLE_URL:
+  CHE_URL:
+  KEYCLOAK_URL:
+  GIT_URL:
+  CHE_USER_NAME:
+  CHE_USER_PASSWORD:
+  OPENSHIFT_USER_NAME:
+  OPENSHIFT_USER_PASSWORD:
+  RHAMT_URL:
+
+modules:
+  activate:
+  - preface
+  - settingup
+  - keycloak
+  - configuration
+  - firstapp
+  - openidconnect
+  - usergroups
+  - identityproviders
+  - advanceconfig
+  - conclusion
+  - appendix

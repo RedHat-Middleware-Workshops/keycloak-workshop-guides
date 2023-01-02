@@ -1,0 +1,26 @@
+config:
+    renderer: asciidoc
+
+modules:
+  preface:
+    name: Preface
+  settingup:
+    name: Setting up
+  keycloak:
+    name: Getting started with RH-SSO
+  configuration:
+    name: Configuring RH-SSO
+  firstapp:
+    name: Simple JS Console application
+  openidconnect:
+    name: Open ID Connect
+  usergroups:
+    name: Users and groups
+  identityproviders:
+    name: Identity providers and OAuth
+  advanceconfig:
+    name: Advanced Configuration
+  conclusion:
+    name: Conclusion  
+  appendix:
+    name: Appendix
