@@ -1,4 +1,41 @@
-== APPENDIX: Setting up my own machine for the lab
+== APPENDIX:Alternative setup
+[#idesetup]
+==== Create a Developer sandbox account to use Openshift
+
+All the labs are using the Red Hat OpenShift Sandbox. 
+Red Hat OpenShift Sandbox ("Sandbox") is a great platform for learning and experimenting with Red Hat OpenShift.The Sandbox is a great platform for learning and experimenting with OpenShift. 
+
+To start using it you will need to create an account if you dont already have one https://developers.redhat.com/developer-sandbox[here]. Once you have the account head off to this page and start your sandbox. It might take a couple of minutes to get access.
+
+image::sso_developersandbox-register.png[Create sandbox account]
+
+Furthermore we also need the Developer Sandbox IDE https://developers.redhat.com/developer-sandbox/ide[Sandbox IDE], in this lab
+
+image::sso_ide_start.png[Create IDE account]
+
+I have created a stack in the Sandbox IDE which includes all the command line tools and plugins required. However if you do not want to use the sandbox IDE, you can look at the appendix section for setting up everything locally.
+
+You can use your preffered IDE, however you will need tools like the 'oc' command line as well. We have already created a stack for the sandbox IDE so everything is already installed for you.
+
+Open up your https://developers.redhat.com/developer-sandbox/ide[Sandbox IDE]
+
+Once logged in browse to workspaces, and click the add workspace button as shown below.
+
+image::che_createworkspace.png[Add workspace button]
+
+[source,sh,role="copypaste"]
+----
+https://github.com/RedHat-Middleware-Workshops/sso-workshop.git
+----
+
+Copy the above link to the 'Git Repo URL' and press create and open. This should start loading and installing your stack. It can take a couple of minutes so let it run in the browser tab.
+
+image::che_createandopen.png[Create and Open workspace]
+
+Perfect, now you should have an IDE setup. Lets move on to the workshop.
+
+
+
 
 The labs are designed to run entirely on openshift, there is no mandatory requirement to install the following components. The following instructions are means of guidance for anyone who wants to try them out on their own machine. 
 
@@ -41,7 +78,7 @@ If you don't have an IDE, here are the steps to get started with Eclipse.
 
 [source]
 ----
-git clone https://github.com/jbossdemocentral/sso-kubernetes-workshop.git
+git clone https://github.com/RedHat-Middleware-Workshops/keycloak-workshop-labs.git
 ----
 
 

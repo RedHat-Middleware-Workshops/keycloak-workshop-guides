@@ -2,33 +2,41 @@
 Before we start the lab, its important that you read the following instructions carefully. These instructions will be refered from the rest of the content if you need to come back to them.
 
 [#prerequisite]
-== First Step: Create a Developer sandbox account
+== First Step: Confirm Your Username!
 
-All the labs are using the Red Hat OpenShift Sandbox. 
-Red Hat OpenShift Sandbox ("Sandbox") is a great platform for learning and experimenting with Red Hat OpenShift.The Sandbox is a great platform for learning and experimenting with OpenShift. 
+Look in the box at the top of your screen. Is your username set already? If so it will look like this:
 
-To start using it you will need to create an account if you dont already have one https://developers.redhat.com/developer-sandbox[here]. Once you have the account head off to this page and start your sandbox. It might take a couple of minutes to get access.
+image::alreadyset.png[Set User ID above, 700]
 
-image::sso_developersandbox-register.png[Create sandbox account]
+If your username is properly set, then you can move on. **If not, in the above box, enter the user ID you were assigned** like this:
 
-Furthermore we also need the Developer Sandbox IDE https://developers.redhat.com/developer-sandbox/ide[Sandbox IDE], in this lab
+image::setuser.png[Set User ID above, 700]
 
-image::sso_ide_start.png[Create IDE account]
+This will customize the links and copy/paste code for this workshop. If you accidentally type the wrong username, just click the green recycle icon to reset it.
 
-I have created a stack in the Sandbox IDE which includes all the command line tools and plugins required. However if you do not want to use the sandbox IDE, you can look at the appendix section for setting up everything locally.
+Throughout this lab you'll discover how Quarkus can make your development of cloud native apps faster and more productive.
 
 == Click-to-Copy
 
-You will see various code and command blocks throughout these exercises which can be copy/pasted directly:
+You will see various code and command blocks throughout these exercises which can be copy/pasted directly by clicking anywhere on the block of text:
 
 [source,java,role="copypaste"]
 ----
-/* A sample Java snippet that you can copy/paste */
+/* A sample Java snippet that you can copy/paste by clicking */
 public class CopyMeDirectly {
     public static void main(String[] args) {
         System.out.println("You can copy this whole class with a click!");
     }
 }
+----
+
+Simply click once and the whole block is copied to your clipboard, ready to be pasted with kbd:[CTRL+V] (or kbd:[Command+V] on Mac OS).
+
+There are also Linux shell commands that can also be copied and pasted into a Terminal in your Development Environment:
+
+[source,sh,role="copypaste"]
+----
+echo "This is a bash shell command that you can copy/paste by clicking"
 ----
 
 There are also Linux shell commands that can also be copied and pasted into a Terminal in your Development Environment:
@@ -47,26 +55,48 @@ Your workshop environment consists of several components which have been pre-ins
 * https://developers.redhat.com/products/openshift-dev-spaces/overview[Red Hat OpenShift Dev Spaces,window=_blank] - Built on the open Eclipse Che project, Red Hat OpenShift Dev Spaces uses Kubernetes and containers to provide any member of the development or IT team with a consistent, secure, and zero-configuration development environment. The experience is as fast and familiar as an integrated development environment on your laptop. OpenShift Dev Spaces is included with your OpenShift subscription and is available in the Operator Hub. It provides development teams a faster and more reliable foundation on which to work, and it gives operations centralized control and peace of mind.
 * https://www.redhat.com/en/products/runtimes[Red Hat Runtimes, window=_blank] - a collection of cloud-native runtimes and platform that enables Spring Boot, Node.js, and https://quarkus.io[Quarkus, window=_blank] developers to create Cloud-native apps with ease.
 
-[#idesetup]
-== Setting up your IDE
-You can use your preffered IDE, however you will need tools like the 'oc' command line as well. We have already created a stack for the sandbox IDE so everything is already installed for you.
 
-Open up your https://developers.redhat.com/developer-sandbox/ide[Sandbox IDE]
+=== About your workspace environment
+For developments and deployment, we use the using Red Hat CodeReady Workspaces, an online IDE based on https://www.eclipse.org/che/[Eclipe Che, window=_blank]. *Changes to files are auto-saved every few seconds*, so you don't need to save changes explicitly.
 
-Once logged in browse to workspaces, and click the add workspace button as shown below.
+To get started, {{ CHE_URL }}[access the CodeReady Workspaces instance^] and log in using the username and password you are assigned (e.g. `{{ USER_ID }}/{{ CHE_USER_PASSWORD }}`):
 
-image::che_createworkspace.png[Add workspace button]
+image::che-login.png[cdw, 700, align="center"]
 
-The already created stack and the source code for the labs exists on the following git url
+By logging in to CodeReady, you get access to your development workspace. We have already created a workspace for you. Your development environment opens up by clicking the workspace on the left menu.
 
-[source,sh,role="copypaste"]
+You can see icons on the left for navigating between project explorer, search, version control (e.g., Git), debugging, and other plugins. You'll use these during this workshop. Feel free to click on them and see what they do:
+
+image::crw-icons.png[cdw, 400, align="center"]
+
+[NOTE]
+====
+If things get weird or your browser appears, you can simply reload the browser tab to refresh the view.
+====
+
+Many features of CodeReady Workspaces are accessed via *Commands*. You can see a few of the commands listed with links on the home page (e.g., _New File.._, _Git Clone.._, and others).
+
+If you ever need to run commands that you don't see in a menu, you can press kbd:[F1] to open the command window, or the more traditional kbd:[Control+SHIFT+P] (or kbd:[Command+SHIFT+P] on Mac OS X).
+
+Let's import our first project. Click on **Git Clone..** (or type kbd:[F1], enter 'git' and click on the auto-completed _Git Clone.._ )
+
+image::gitclonepage.png[cdw, 600, align="center"]
+
+Step through the prompts, using the following value for **Repository URL**. If you use *FireFox*, it may end up pasting extra spaces at the end, so just press backspace after pasting:
+
+[source, shell, role="copypaste"]
 ----
-https://github.com/RedHat-Middleware-Workshops/sso-workshop.git
+https://github.com/RedHat-Middleware-Workshops/keycloak-workshop-labs.git
+
 ----
 
-Copy the above link to the 'Git Repo URL' and press create and open. This should start loading and installing your stack. It can take a couple of minutes so let it run in the browser tab.
+image::gitclone.png[crw, 600, align="center"]
 
-image::che_createandopen.png[Create and Open workspace]
+The project is now imported into your workspace. Following screenshot shows the workspace after the lab projects have been imported.
+
+1. On the left you can see the project explorer with the heading *EXPLORER:PROJECTS*. Project explorer can be used to navigate to source files. Once you click any source file. it will open up in the editor.
+2. On the right is the `Workspace Command View` with the heading *MYWORKSPACE:WORKSPACE*. In this view we have created point and click commands. These commands will be used through out the workshop labs.
+
 
 Perfect, now you should have an IDE setup. Lets move on to the workshop.
 
@@ -75,20 +105,3 @@ Perfect, now you should have an IDE setup. Lets move on to the workshop.
 Click the "Next >" button at the bottom to advance to the next topic. You can also use the menu on the left to move around the instructions at will.
 
 Good luck, and let’s get started!
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
