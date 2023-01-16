@@ -25,8 +25,16 @@ It is possible to disable the master realm and define admin accounts within each
 With Single Sign-On we expect there will be users logging in, there is integration to OAuth etc. Obviously we need to have an email integration so SSO server can send verfication emails etc. 
 
 To start lets setup a mail server that has a catchall and is only used for testing. 
-MailCatcher runs a super simple SMTP server which catches any message sent to it to display in a web interface. By running mailcatcher we can get all the emails within our setup for testing and we wont need to use our personal or corporate emails for this. Its a great utility. the mail server is setup on port '1025' and the html interface to recieve and send should be setup on port '8080'. Lets create our test mail server by running the following commands.
+MailCatcher runs a super simple SMTP server which catches any message sent to it to display in a web interface. By running mailcatcher we can get all the emails within our setup for testing and we wont need to use our personal or corporate emails for this. Its a great utility. the mail server is setup on port '1025' and the html interface to recieve and send should be setup on port '8080'. Lets create our test mail server by running the following commands. To this click on the workbench icon on the right hand side in your CodeReady Workspace.
 
+
+image::crw_right_workbench.png[Workbench]
+
+<1> Login to Openshift
+
+<2> New Terminal
+
+Now you can run the following commands in the terminal you just opened.
 
 [source,bash,role="copypaste"]
 ----
@@ -61,8 +69,7 @@ Press the email Tab, and lets configure it.
 
 image::sso_adminemailconfig.png[Realm Email config]
 
-<1> Further more ensure that Enable SSL, Enable StartTLS and Enable Authentication are selected.
-<2> Also ensure that you have filled in the `From Display Name`, its not mandatory, but for this workshop if users are sharing emails, it will help alot.
+<1> Ensure that you have filled in the `From Display Name`, its not mandatory, but for this workshop if users are sharing emails, it will help alot.
 
 Once done making changes `save`. 
 
@@ -93,12 +100,13 @@ Open a new browser session in privacy mode, or open another browser.
   
   * Ensure that you are not logged into the SSO admin panel in the newly opened browser sessions. 
 
+Link to the console: https://sso-{{ USER_ID }}-{{ ROUTE_SUBDOMAIN }}/auth/admin/demojs/console
 
 <1> It should show a login screen, with a link under the buttons to register. 
 
 <2> Hit the register button and register a new user. 
 
-<3> Ensure that you fill in the right email address, since an email will be sent to verify the newly created user. ensure that this email address is not the same as used previously in this excercise.
+<3> Ensure that you fill in the an email address, since an email will be sent to verify the newly created user. ensure that this email address is not the same as used previously in this excercise. The email will land in our mailcatcher web-ui. 
 
 Once you have registered you should see the following message:
 
