@@ -100,7 +100,7 @@ Open a new browser session in privacy mode, or open another browser.
   
   * Ensure that you are not logged into the SSO admin panel in the newly opened browser sessions. 
 
-Link to the console: https://sso-{{ USER_ID }}-keycloak.{{ ROUTE_SUBDOMAIN }}/auth/admin/demojs/console/
+Link to the console: https://sso-{{ USER_ID }}-keycloak.{{ ROUTE_SUBDOMAIN }}/auth/realms/master/account
 
 <1> It should show a login screen, with a link under the buttons to register. 
 
