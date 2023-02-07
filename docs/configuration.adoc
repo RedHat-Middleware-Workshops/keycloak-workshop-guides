@@ -30,7 +30,7 @@ MailCatcher runs a super simple SMTP server which catches any message sent to it
 
 image::crw_right_workbench.png[Workbench]
 
-<1> Login to Openshift
+<1> Login to OpenShift
 
 <2> New Terminal
 
@@ -49,7 +49,7 @@ oc expose svc/mailcatcher --port 8080
 
 Once the installation is done you should see it as follows. 
 
-image::openshift_mailcatcherinstalled.png[Mailcatcher]
+image::OpenShift_mailcatcherinstalled.png[Mailcatcher]
 
 Lets configure our new realm demojs. Just a small config we should do before that. Since we plan to use emails lets add the Admin email account details too. 
 

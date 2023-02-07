@@ -9,14 +9,14 @@ need a container platform. That's what Kubernetes is. Kubernetes defines a set o
 collectively provide mechanisms for deploying, maintaining, and scaling applications packaged inside containers. OpenShift
  _extends_ Kubernetes with build automation and a routing system, while inheriting all the primitives from Kubernetes.
 
-[#openshift-architecture]
+[#OpenShift-architecture]
 
-image::openshift-architecture.png[OpenShift Architecture, 800]
+image::OpenShift-architecture.png[OpenShift Architecture, 800]
 
-[#openshift-primitives]
+[#OpenShift-primitives]
 == Primitives
 
-[#openshift-pod]
+[#OpenShift-pod]
 === Pod
 
 The basic scheduling unit in Kubernetes is called a _pod_. It adds a higher level of abstraction to containerized components.
@@ -26,7 +26,7 @@ Each pod in Kubernetes is assigned a unique (within the cluster) IP address, whi
  the containers in the pod. Pods can be manually managed through the Kubernetes API, or their management can be
  delegated to a controller.
 
-[#openshift-labels]
+[#OpenShift-labels]
 === Labels and Selectors
 
 Kubernetes enables clients (users or internal components) to attach key-value pairs called _labels_ to any API object
@@ -34,7 +34,7 @@ Kubernetes enables clients (users or internal components) to attach key-value pa
  objects. Labels and selectors are the primary grouping mechanism in Kubernetes and are used to determine the components
  to which an operation applies. Labels and selectors are used to group entities together.
 
-[#openshift-controller]
+[#OpenShift-controller]
 === Replication Controller and Deployment
 
 Controllers are entities managing other entities in order to keep them in a specific state. For instance, a
@@ -53,12 +53,12 @@ Building on replication controllers, OpenShift expands support for the deploymen
   deployments also provide the ability to transition from an existing deployment (_v1_ for instance) of an image to a new
   one (_v2_ for instance) and also define hooks to be run before or after creating the replication controller.
 
-Openshift deployments propose a set of strategies. The default is _rolling_ which implements (as the name implies) rolling 
+OpenShift deployments propose a set of strategies. The default is _rolling_ which implements (as the name implies) rolling 
 updates and ensures that you don't disrupt your service. Before stopping the pod, it ensures that the new _version_ is alive and 
 ready. Then, it routes requests to this new pod and dispose the old one.  Other strategies provided include _recreate_, 
 _blue-green_, _A/B_, and the ability to create a custom strategy.
 
-[#openshift-builds]
+[#OpenShift-builds]
 === Build and Image
 
 As stated in the previous section, `deployments` are responsible for keeping the application running. But we need to
@@ -75,9 +75,9 @@ Image) as a tool to provide reproducible images. In this lab, we are going to us
 going to build the application on our machine and push the resulting artifact (a _fat jar_) as input to an S2I build.
 This build creates an image for starting the application.
 
-image::openshift-build-process.png[OpenShift Build Process, 800]
+image::OpenShift-build-process.png[OpenShift Build Process, 800]
 
-[#openshift-services]
+[#OpenShift-services]
 === Services
 
 Ok, so we know how our application is going to be _built_ and instantiated on OpenShift. But how are we going to use
@@ -88,16 +88,16 @@ consistently available enabling anything that depends on the service to refer to
 Services are assigned an IP address and port pair that, when accessed, proxy to an appropriate backing pod. A service
 uses a label selector to find all the containers running that provide a certain network service on a certain port.
 
-image::openshift-service.png[OpenShift Services, 400]
+image::OpenShift-service.png[OpenShift Services, 400]
 
-[#openshift-routes]
+[#OpenShift-routes]
 === Routes
 
 _Routes_ are the last concept to understand before starting to use OpenShift. Services provides an internal IP.
 Routes exposes a service outside of OpenShift. A route allows you to associate a service with an externally-reachable
  host name.
 
-image::openshift-entities.png[OpenShift Entities, 800]
+image::OpenShift-entities.png[OpenShift Entities, 800]
 
 
 Now, you are ready to deploy your first application.
@@ -158,9 +158,9 @@ For example:
 
 
 Now that you have the basic config in place, lets go ahead and deploy our applicaton.
-We use the S2i (Source2Image) from Openshift and create a stream from our project. This has some benefits. If we need to change anything in our app we will just start a new build. Incase you have missed anything, you could easily do the `start-build` again.
+We use the S2i (Source2Image) from OpenShift and create a stream from our project. This has some benefits. If we need to change anything in our app we will just start a new build. Incase you have missed anything, you could easily do the `start-build` again.
 
-We also use the httpd image-stream provided by default with Openshift. This is the Apache httpd server; hence our application will be packaged into an Apache web server.
+We also use the httpd image-stream provided by default with OpenShift. This is the Apache httpd server; hence our application will be packaged into an Apache web server.
 
 *before starting make sure that you have Code Ready workspace `Terminal` open. 
 
@@ -194,7 +194,7 @@ oc expose svc/js-console
 
 [#firstapp-deployment]
 
-image::openshift-first-deployment.png[First deployment, 1024]
+image::OpenShift-first-deployment.png[First deployment, 1024]
 
 
 Click on the route url and you should see the `js-console`.  This indicates that your first application was successfully deployed. But there still need to be more config done as it would return an error. As you might have noticed that we havent configured the RH-SSO for our js-console app yet.Lets go ahead and configure that. 

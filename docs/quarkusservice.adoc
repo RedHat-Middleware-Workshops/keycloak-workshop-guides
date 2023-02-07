@@ -1,0 +1,304 @@
+[#securingcloudnativeapps]
+
+Content and purpose of the lab
+
+image to descirbe what we are trying to achieve. 
+
+About the maven project and layout
+
+explain the properties file
+
+=== What is Quarkus?
+image::logo.png[quarkus-logo, 900]
+
+Quarkus is a Kubernetes Native Java stack tailored for GraalVM & OpenJDK HotSpot, crafted from the best of breed Java libraries and standards. Amazingly fast boot time, incredibly low RSS memory (not just heap size!) offering near instant scale up and high density memory utilization in container orchestration platforms like Kubernetes. Quarkus uses a technique called https://quarkus.io/vision/container-first[compile time boot^] and offers a unified imperative and reactive programming model and a number of other developer features like Live Reload to bring _real joy_ to your development.
+
+*Red Hat* offers the fully supported https://access.redhat.com/products/quarkus[Red Hat Build of Quarkus(RHBQ)^] with support and maintenance of Quarkus. In this workhop, you will use Quarkus to develop Kubernetes-native microservices and deploy them to OpenShift. Quarkus is one of the runtimes included in https://www.redhat.com/en/products/runtimes[Red Hat Runtimes^]. https://access.redhat.com/documentation/en-us/red_hat_build_of_quarkus[Learn more about RHBQ^].
+
+
+
+
+
+
+=== Create Books entity
+Create books
+
+[source,java,role="copypaste"]
+----
+
+    @NotNull
+    @NotBlank
+    public String title;
+    public String genre;
+    @Column(unique = true)
+    @NotNull
+    @Id
+    public String isbn;
+    @Column(columnDefinition = "TEXT")
+    public String summary;
+----
+
+
+
+Add access methods
+
+[source,java,role="copypaste"]
+----
+    public static List<Book> getAll(){
+        return listAll();
+    }
+
+    public static Book getOne(String isbn){
+        return findById(isbn);
+    }
+----
+
+
+
+
+=== Create Books Resource
+create resource
+
+[source,java,role="copypaste"]
+----
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+
+    public List<Book> getAll() {
+        return Book.listAll();
+
+    }
+
+    @GET
+    @Path("/{isbn}")
+
+    public Book getOne(@PathParam("isbn") String isbn) {
+        Book entity = Book.findById(isbn);
+        if (entity == null) {
+            throw new WebApplicationException("Book with id of " + isbn + " does not exist.", Response.Status.NOT_FOUND);
+        }
+        return entity;
+    }
+----
+
+Post method
+[source,java,role="copypaste"]
+----
+
+    @POST
+    @Transactional
+    public Response create(@Valid Book item) {
+        item.persist();
+        return Response.status(Response.Status.CREATED).entity(item).build();
+    }
+----
+
+put for updating
+[source,java,role="copypaste"]
+----
+    @PUT
+    @Path("/{id}")
+    @Transactional
+    public Response update(@Valid Book book, @PathParam("id") String isbn) {
+        Book entity = Book.findById(isbn);
+        entity.title = book.title;
+        entity.genre = book.genre;
+        entity.summary = book.summary;
+        return Response.ok(entity).build();
+    }
+----
+
+delete method
+
+[source,java,role="copypaste"]
+----
+    @DELETE
+    @Path("/{isbn}")
+    @Transactional
+    public Response deleteOne(@PathParam("isbn") String isbn) {
+        Book entity = Book.findById(isbn);
+        if (entity == null) {
+            throw new WebApplicationException("Book with isbn of " + isbn + " does not exist.", Response.Status.NOT_FOUND);
+        }
+        entity.delete();
+        return Response.noContent().build();
+    }
+----
+
+
+
+=== Deploy to OpenShift
+
+Before we start to deploy our application we also need to deploy that database to the OpenShift cluster so that are code and reference it and store values into it.
+
+The following command will create a database called `books-database` and thats how we will reference it in our app settings later on as well. Run this command in your `CodeReady terminal`
+
+[source,sh,role="copypaste"]
+----
+
+oc new-app -e POSTGRESQL_USER=quarkus \
+    -e POSTGRESQL_PASSWORD=quarkus \
+    -e POSTGRESQL_DATABASE=books \
+    OpenShift/postgresql:latest \
+    --name=books-database
+
+
+----
+
+Once you have ran the command you should similar output as follows
+
+[source,sh]
+----
+.
+.
+--> Creating resources ...
+    deployment.apps "books-database" created
+    service "books-database" created
+--> Success
+    Application is not exposed. You can expose services to the outside world by executing one or more of the commands below:
+     'oc expose service/books-database' 
+    Run 'oc status' to view your app.
+----
+
+If you go back to the developer console `Topology view` in OpenShift you should see the database deployed as follows
+
+image::OpenShift_pg_deploy.png[OpenShift posgtresdb deploy]
+
+
+Perfect! now we have our database deployed. Lets also deploy the application. For that we will first need to ensure we have the right database configuration. Quarkus uses its pre-built OpenShift extension to deploy apps to OpenShift. This way the developer does not need to worry about all the different Kubernetes manifests/yaml files that needs to be created. Its taken care of by Quarkus. This is great, because now all we need to do is give some parameters into our application.properties and we are all set to deploy. Open up the `application.properties` file in your CodeReady workspace. You should be able to find it on this path `crud-oidc/src/main/resources/application.properties`.
+
+[source,sh,role="copypaste"]
+----
+quarkus.hibernate-orm.database.generation=drop-and-create
+quarkus.hibernate-orm.sql-load-script=import.sql <3>
+quarkus.datasource.username=quarkus
+quarkus.datasource.password=quarkus
+quarkus.datasource.jdbc.url=jdbc:postgresql://books-database:5432/books <1> 
+quarkus.datasource.db-kind=postgresql
+
+quarkus.http.cors=true
+quarkus.kubernetes-client.trust-certs=true
+quarkus.openshift.route.expose=true <2> 
+----
+
+<1> This is the resource we are trying to hit. in our case its the `books-database` instance of PostgreSQL and the name of the datbase is books. which is listening to the default port of 5432. This database is not exposed outside our namespace.
+
+<2> We also want that once our application is deployed it will automatically create a route in Openshift. We do not need to do it manually and this is where the `OpenShift extension` in Quarkus is so powerful. If you use other deployment tools like Jib or you want to build your own containers there are extensions for that too listed here; https://quarkus.io/guides/container-image[Container images with Quarkus]
+
+<3> By default Quarkus will pick-up the import.sql file while developing and using Dev services. however here we are explicitly asking Quarkus to import the sql into the database once the applications is initialized. In our case so we have some startup data to play with.
+
+Now that we have all the configuration set, lets deploy our application to OpenShift. The following command will
+
+<1> Compile our code.
+
+<2> Package our code in to Java Jar archive
+
+<3> Create a build config in Openshift
+
+<4> Start the build, which will have an image as its end result.
+
+<5> Create a `Deployment Config` in OpenShift
+
+<6> Finally create a public route to our service.
+
+Lets run this command in the `CodeReady Terminal`. Make sure you are in the project directory crud-oidc when you do this.
+
+[source,sh,role="copypaste"]
+----
+    mvn clean compile package -Dquarkus.kubernetes.deploy=true
+----
+
+The command will take a few seconds to run. While we wait for it to complete. You can also check the status in the Openshift developer console.
+
+Okay lets head back to our CodeReady and check if our service brought the data we require. 
+
+Run the following command in the terminal
+
+[source,sh,role="copypaste"]
+----
+ curl -v -GET http://crud-oidc-{{ USER_ID }}-keycloak.{{ ROUTE_SUBDOMAIN }}/books
+----
+
+This should render an output with JSON output with details of books. You can hit the same URL in your browser and it should just render the JSON itself.
+
+Lets add try to do a couple more operations to the
+[source,sh,role="copypaste"]
+----
+# Gets all books
+ curl -v -GET http://crud-oidc-{{ USER_ID }}-keycloak.{{ ROUTE_SUBDOMAIN }}/books
+
+# Get one book
+
+# Delete a book
+
+# Create a new book
+
+# Update a book
+
+----
+
+Perfect! So by now we have added our API endpoint `/books` using Quarkus. And we also have our database setup. 
+And you might have noticed that our endpoint is publicly available. This means its available for anyone to do all these operations without them being authenticated or authorized to do so. This has left our service open to intruders and this is not good! Lets try to secure this application
+
+
+
+=== Add OIDC annotations
+Add oidc annotations
+
+=== Setup SSO
+Setup new realm
+
+[source, shell]
+----
+#quarkus.oidc.auth-server-url=https://sso-{{ USER_ID }}-keycloak.{{ ROUTE_SUBDOMAIN }}/auth/realms/quarkus
+#quarkus.oidc.client-id=backend-service
+#quarkus.oidc.credentials.secret=secret
+----
+
+
+=== Deploy to OpenShift
+deploy again
+----
+deploy to OpenShift
+
+    mvn clean compile package -Dquarkus.kubernetes.deploy=true
+----
+
+=== Test the service
+curl and test
+
+[source,sh,role="copypaste"]
+----
+export access_token=$(\
+    curl --insecure -X POST http://localhost:8180/realms/quarkus/protocol/openid-connect/token \
+    --user backend-service:secret \
+    -H 'content-type: application/x-www-form-urlencoded' \
+    -d 'username=alice&password=alice&grant_type=password' | jq --raw-output '.access_token' \
+ )
+----
+
+[source,sh,role="copypaste"]
+----
+curl -v -X GET \
+  http://localhost:8080/api/users/me \
+  -H "Authorization: Bearer "$access_token
+----
+
+[source,sh,role="copypaste"]
+----
+curl -v -X GET \
+   http://localhost:8080/api/admin \
+   -H "Authorization: Bearer "$access_token
+----
+
+[source,sh,role="copypaste"]
+----
+export access_token=$(\
+    curl --insecure -X POST http://localhost:8180/realms/quarkus/protocol/openid-connect/token \
+    --user backend-service:secret \
+    -H 'content-type: application/x-www-form-urlencoded' \
+    -d 'username=admin&password=admin&grant_type=password' | jq --raw-output '.access_token' \
+ )
+ ----
+
+

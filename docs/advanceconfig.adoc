@@ -136,7 +136,7 @@ cp ../../themes/target/themes.jar deployments/
 
 ----
 
-So we have now built the jar files and copied them to our working directory from where we will build our custom RH-SSO image. You can always create the images in an openshift namespace, so that all users and applications have access to it. In our case we have chosen to keep this to our project namespace only.
+So we have now built the jar files and copied them to our working directory from where we will build our custom RH-SSO image. You can always create the images in an OpenShift namespace, so that all users and applications have access to it. In our case we have chosen to keep this to our project namespace only.
 Remember to `replace evalsXX with your username` and also ensure you are in the `sso-custom/stream` directory before running the following commands.
 
 [#custom-stream]
@@ -147,20 +147,20 @@ Remember to `replace evalsXX with your username` and also ensure you are in the 
 oc new-project <evalsXX>-sso-custom-kubernetes-workshop
 
 # Create a build directive with Red Hat SSO official image stream.
-oc new-build --name custom-sso73-openshift --binary --strategy source --image-stream redhat-sso73-openshift:1.0
+oc new-build --name custom-sso73-OpenShift --binary --strategy source --image-stream redhat-sso73-OpenShift:1.0
 
 # Start the custom build
-oc start-build custom-sso73-openshift --from-dir . --follow
+oc start-build custom-sso73-OpenShift --from-dir . --follow
 ----
 
-Switch to this new project in your openshift console. the rest of the guide assumes the new SSO instance in this project.
+Switch to this new project in your OpenShift console. the rest of the guide assumes the new SSO instance in this project.
 
 You can now also run `oc get imagestreams` which should render a similar output as follows.
-Notice that we have named our custom image as `custom-sso73-openshift`. 
+Notice that we have named our custom image as `custom-sso73-OpenShift`. 
 
 [source,bash,subs="+macros,+attributes"]
 ----
-custom-sso73-openshift  docker-registry.default.svc:5000/.../custom-sso73-openshift   
+custom-sso73-OpenShift  docker-registry.default.svc:5000/.../custom-sso73-OpenShift   
 ----
 
 Now that have the image ready to be deplyed we need to take one last step.
@@ -179,7 +179,7 @@ INFO [org.keycloak.subsystem.server.extension.KeycloakProviderDeploymentProcesso
 
 Lets wait for it to be deployed successfully. 
 
-While openshift is deploying, lets also deploy our JS Console. 
+While OpenShift is deploying, lets also deploy our JS Console. 
 
 Now open the `js-console/src/keycloak.json`
 
@@ -233,7 +233,7 @@ And finally expose a route for our service so that we can connect to it external
 oc expose svc/js-console
 ----
 
-Once openshift has finished deploying the JS console and Red Hat SSO custom built. 
+Once OpenShift has finished deploying the JS console and Red Hat SSO custom built. 
 Lets also create a client for the JS Console.
 
 Click on the left menu bar item `Clients` 

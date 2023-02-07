@@ -13,8 +13,8 @@ vars:
   GIT_URL:
   CHE_USER_NAME:
   CHE_USER_PASSWORD:
-  OPENSHIFT_USER_NAME:
-  OPENSHIFT_USER_PASSWORD:
+  OpenShift_USER_NAME:
+  OpenShift_USER_PASSWORD:
   RHAMT_URL:
 
 modules:
@@ -28,5 +28,6 @@ modules:
   - usergroups
   - identityproviders
   - advanceconfig
+  - quarkusservice
   - conclusion
   - appendix
