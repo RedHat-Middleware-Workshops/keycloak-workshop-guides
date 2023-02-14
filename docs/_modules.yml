@@ -20,6 +20,8 @@ modules:
     name: Identity providers and OAuth
   advanceconfig:
     name: Advanced Configuration
+  quarkusservice:
+    name: Securing Cloud native apps
   conclusion:
     name: Conclusion  
   appendix:

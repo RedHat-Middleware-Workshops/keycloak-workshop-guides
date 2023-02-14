@@ -1,6 +1,6 @@
 == APPENDIX:Alternative setup
 [#idesetup]
-==== Create a Developer sandbox account to use Openshift
+==== Create a Developer sandbox account to use OpenShift
 
 All the labs are using the Red Hat OpenShift Sandbox. 
 Red Hat OpenShift Sandbox ("Sandbox") is a great platform for learning and experimenting with Red Hat OpenShift.The Sandbox is a great platform for learning and experimenting with OpenShift. 
@@ -37,9 +37,9 @@ Perfect, now you should have an IDE setup. Lets move on to the workshop.
 
 
 
-The labs are designed to run entirely on openshift, there is no mandatory requirement to install the following components. The following instructions are means of guidance for anyone who wants to try them out on their own machine. 
+The labs are designed to run entirely on OpenShift, there is no mandatory requirement to install the following components. The following instructions are means of guidance for anyone who wants to try them out on their own machine. 
 
-*Recommended path is to use the Openshift RHMI/Integreatly environment provided in this workshop.
+*Recommended path is to use the OpenShift RHMI/Integreatly environment provided in this workshop.
 
 === Java Development Kit
 

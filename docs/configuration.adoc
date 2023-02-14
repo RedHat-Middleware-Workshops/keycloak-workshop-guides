@@ -30,7 +30,7 @@ MailCatcher runs a super simple SMTP server which catches any message sent to it
 
 image::crw_right_workbench.png[Workbench]
 
-<1> Login to Openshift
+<1> Login to OpenShift
 
 <2> New Terminal
 
@@ -49,7 +49,7 @@ oc expose svc/mailcatcher --port 8080
 
 Once the installation is done you should see it as follows. 
 
-image::openshift_mailcatcherinstalled.png[Mailcatcher]
+image::OpenShift_mailcatcherinstalled.png[Mailcatcher]
 
 Lets configure our new realm demojs. Just a small config we should do before that. Since we plan to use emails lets add the Admin email account details too. 
 
@@ -100,7 +100,7 @@ Open a new browser session in privacy mode, or open another browser.
   
   * Ensure that you are not logged into the SSO admin panel in the newly opened browser sessions. 
 
-Link to the console: https://sso-{{ USER_ID }}-{{ ROUTE_SUBDOMAIN }}/auth/admin/demojs/console
+Link to the console: https://sso-{{ USER_ID }}-keycloak.{{ ROUTE_SUBDOMAIN }}/auth/realms/demojs/account
 
 <1> It should show a login screen, with a link under the buttons to register. 
 
