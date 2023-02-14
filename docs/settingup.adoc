@@ -86,7 +86,7 @@ Step through the prompts, using the following value for **Repository URL**. If y
 
 [source, shell, role="copypaste"]
 ----
-https://github.com/RedHat-Middleware-Workshops/keycloak-workshop-labs.git
+https://github.com/RedHat-Middleware-Workshops/keycloak-workshop-labs
 
 ----
 

@@ -321,4 +321,4 @@ We didnt cover details on the Themes in this section, but you should now be able
 
 
 === Achievement unlocked!
-Congratulations in this section you have been able to customzie Red Hat SSO with Themes, OTP integration, changing keys, and adding custom code like the magic link. Now you are almost ready for the real world deployment. Lets head off to the next section where we will create our first Spring greeting service and secure it with Red Hat SSO.
+Congratulations in this section you have been able to customzie Red Hat SSO with Themes, OTP integration, changing keys, and adding custom code like the magic link. Now you are almost ready for the real world deployment. Lets head off to the next section where we will create our first `Quarkus books` service and secure it with Red Hat SSO.
