@@ -7,9 +7,7 @@ In this section we will view some of the current configuration and also add smtp
 === What is a Realm 
 A realm is the logical namespace for all configurations, options, for a given group or applications or services. A realm secures and manages security metadata for a set of users, applications, and registered identity brokers, clients etc. Users can be created within a specific realm within the Administration console. Roles (permission types) can be defined at the realm level and you can also set up user role mappings to assign these permissions to specific users. A user belongs to and logs into a realm. Realms are isolated from one another and can only manage and authenticate the users that they control.
 
-For this example we will configure our demo realm which needs to be created.
-Click on the left menu, and press the button `Add Realm`
-Lets give it a name `demojs`. We are calling it demojs, as the name denotes, our first applictation will be a simple Java Script Console. This console will help us do some fun exercises and learn more about Red Hat SSO. So whats the difference between the Master Realm that was already created and why did we create a new one? 
+So whats the difference between the Master Realm that was already created and why did we create a new one? 
 
 [#master-realm]
 === The Master Realm
