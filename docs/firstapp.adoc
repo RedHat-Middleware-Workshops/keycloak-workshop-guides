@@ -129,7 +129,7 @@ e.g. in my case it looks something like this:
 ```
 > oc get route sso
 NAME   HOST/PORT                                        PATH   SERVICES   
-sso    sso-workshop.apps.cph-c747.open.redhat.com       sso        <all>
+sso    sso-{{ USER_ID }}-keycloak.{{ ROUTE_SUBDOMAIN }}       sso        <all>
 ```
 
 or just copy it from your browser, ensure you copy the protocol also e.g. 'https://...'
@@ -137,11 +137,11 @@ or just copy it from your browser, ensure you copy the protocol also e.g. 'https
 Now open the `js-console/src/keycloak.json`
 
 Change the following line "auth-server-url" with your SERVER_URL
-[source, js]
+[source, js,role="copypaste"]
 ----
 {
   "realm" : "demojs",
-  "auth-server-url" : "<SERVER_URL>/auth",
+  "auth-server-url" : "https://sso-{{ USER_ID }}-keycloak.{{ ROUTE_SUBDOMAIN }}/auth",
   "resource" : "js-console"
 }
 
@@ -149,12 +149,15 @@ Change the following line "auth-server-url" with your SERVER_URL
 
 Next open the `js-console/src/index.html`
 And replace the SERVER_URL in the <header> <src>
-For example:
-```
 
-    <script src="https://sso-workshop.apps.cph-c747.open.redhat.com/auth/js/keycloak.js"></script>
+Your server URL should be as follows
 
-```
+[source, js,role="copypaste"]
+----
+
+    <script src="https://sso-{{ USER_ID }}-keycloak.{{ ROUTE_SUBDOMAIN }}/auth/js/keycloak.js"></script>
+
+----
 
 
 Now that you have the basic config in place, lets go ahead and deploy our applicaton.
