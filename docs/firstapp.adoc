@@ -128,7 +128,7 @@ Make sure you copy your SSO server URL (created in the previous section):
 e.g. in my case it looks something like this:
 ```
 > oc get route sso
-NAME   HOST/PORT                                        PATH   SERVICES   
+NAME   HOST/PORT                                              PATH   SERVICES   
 sso    sso-{{ USER_ID }}-keycloak.{{ ROUTE_SUBDOMAIN }}       sso        <all>
 ```
 
