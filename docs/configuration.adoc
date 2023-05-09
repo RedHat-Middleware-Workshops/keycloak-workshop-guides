@@ -39,9 +39,15 @@ Now you can run the following commands in the terminal you just opened.
 [source,bash,role="copypaste"]
 ----
 oc new-app quay.io/sshaaf/mailcatcher --name=mailcatcher
+----
 
+[source,bash,role="copypaste"]
+----
 oc expose svc/mailcatcher --port 8080
 ----
+
+
+
 
 <1> the first command will initiate the mailcatcher server
 

@@ -76,7 +76,7 @@ If you don't have an IDE, here are the steps to get started with Eclipse.
 
 === Getting the code
 
-[source]
+[source,sh,role="copypaste"]
 ----
 git clone https://github.com/RedHat-Middleware-Workshops/keycloak-workshop-labs.git
 ----
