@@ -120,36 +120,57 @@ We already have created some custom code for you to make use of.
 Lets build the two projects. Goto your code ready terminal and navigate to these projects. 
 Ensure you are in the root directory e.g. sso-kubernetes-workshop. 
 
-[source,bash,subs="+macros,+attributes"]
+
+## build individual projects
+[source,bash,subs="+macros,+attributes",role="copypaste"]
 ----
-#build individual projects
 cd magic-link
+----
+[source,bash,subs="+macros,+attributes",role="copypaste"]
+----
 mvn clean compile package
-
+----
+[source,bash,subs="+macros,+attributes",role="copypaste"]
+----
 cd ../themes
+----
+[source,bash,subs="+macros,+attributes",role="copypaste"]
+----
 mvn clean compile package
-
-# copy the jar files
+----
+## copy the jar files
+[source,bash,subs="+macros,+attributes",role="copypaste"]
+----
 cd ../sso-custom/stream
+----
+[source,bash,subs="+macros,+attributes",role="copypaste"]
+----
 cp ../../magic-link/target/magic-link.jar deployments/
+----
+[source,bash,subs="+macros,+attributes",role="copypaste"]
+----
 cp ../../themes/target/themes.jar deployments/
-
 ----
 
 So we have now built the jar files and copied them to our working directory from where we will build our custom RH-SSO image. You can always create the images in an OpenShift namespace, so that all users and applications have access to it. In our case we have chosen to keep this to our project namespace only.
-Remember to `replace evalsXX with your username` and also ensure you are in the `sso-custom/stream` directory before running the following commands.
+Ensure you are in the `sso-custom/stream` directory before running the following commands.
 
 [#custom-stream]
-[source,bash,subs="+macros,+attributes"]
+
+## Create a new project
+[source,bash,subs="+macros,+attributes",role="copypaste"]
+----
+oc new-project {{ USER_ID }}-sso-custom-kubernetes-workshop
 ----
 
-# Create a new project
-oc new-project <evalsXX>-sso-custom-kubernetes-workshop
-
-# Create a build directive with Red Hat SSO official image stream.
+## Create a build directive with Red Hat SSO official image stream.
+[source,bash,subs="+macros,+attributes",role="copypaste"]
+----
 oc new-build --name custom-sso73-OpenShift --binary --strategy source --image-stream redhat-sso73-OpenShift:1.0
-
-# Start the custom build
+----
+## Start the custom build
+[source,bash,subs="+macros,+attributes",role="copypaste"]
+----
 oc start-build custom-sso73-OpenShift --from-dir . --follow
 ----
 
@@ -206,28 +227,28 @@ For example:
 [#deploy-js-app]
 Before starting make sure that you have Code Ready workspace `Terminal` open. 
 - and also ensure that you have changed you directory too `js-console/src`
-[source,bash,subs="+macros,+attributes"]
-----
 
+[source,bash,subs="+macros,+attributes",role="copypaste"]
+----
 oc new-build --name js-console --binary --strategy source --image-stream httpd
 ----
 
 Ok, so `oc new-build` should have set the right directives for our applicaiton. i.e. `js-console` which uses the httpd stream.
 
 Lets start our build; in the following command we specify that our build will be from our local source dir.
-[source,bash,subs="+macros,+attributes"]
+[source,bash,subs="+macros,+attributes",role="copypaste"]
 ----
 oc start-build js-console --from-dir . --follow
 ----
 
 Once our build is successfull, lets create a new app with that build; this will be our js-console app.
-[source,bash,subs="+macros,+attributes"]
+[source,bash,subs="+macros,+attributes",role="copypaste"]
 ----
 oc new-app --image-stream=js-console:latest
 ----
 
 And finally expose a route for our service so that we can connect to it externally.
-[source,bash,subs="+macros,+attributes"]
+[source,bash,subs="+macros,+attributes",role="copypaste"]
 ----
 
 oc expose svc/js-console
@@ -243,7 +264,7 @@ Then Click the `Create` button
 Following is the information you need to fill. 
 To get the route to your js-console you can run the following command.
 
-[source,bash,subs="+macros,+attributes"]
+[source,bash,subs="+macros,+attributes",role="copypaste"]
 ----
 oc get route js-console
 ----

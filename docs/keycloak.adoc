@@ -49,7 +49,7 @@ Make sure that you have completed the setting up instructions before moving forw
 
 Lets first take a look at the installed templates:
 Run the following command:
-[source,bash,subs="+macros,+attributes"]
+[source,bash,subs="+macros,+attributes",role="copypaste"]
 ----
 oc get templates -n OpenShift -o name | grep -o 'sso75.\+'
 ----
