@@ -305,9 +305,9 @@ Perfect! Now we are at a point that we need to configure our backend service to 
 
 [source, shell]
 ----
-#quarkus.oidc.auth-server-url=https://sso-{{ USER_ID }}-keycloak.{{ ROUTE_SUBDOMAIN }}/auth/realms/quarkus <1> 
-#quarkus.oidc.client-id=backend-service <2> 
-#quarkus.oidc.credentials.secret=secret <3> 
+quarkus.oidc.auth-server-url=https://sso-{{ USER_ID }}-keycloak.{{ ROUTE_SUBDOMAIN }}/auth/realms/quarkus<1> 
+quarkus.oidc.client-id=backend-service<2> 
+quarkus.oidc.credentials.secret=secret<3> 
 ----
 Copy the above properties in the `application.properties` file.
 <1> is the authenticatin url that our Quarkus application will use to establish authentication.
