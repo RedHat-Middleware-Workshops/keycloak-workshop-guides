@@ -91,7 +91,7 @@ Now let's make sure this group and the claim is added to the token.
   
   "scope": "openid avatar myscope profile email",
   "user_type": "consumers",
-  "groups": [
+  "Group Membership": [
     "/mygroup"
   ]
 ----

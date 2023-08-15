@@ -54,15 +54,11 @@ You can do this by either going to 'account settings/developer settings' or clic
 
 - Fill in the following values:
 
-    Application name: Keycloak
-    Homepage URL: <JS CONSOLE URL>
-    Authorization callback URL: https://<SERVER_URL>/auth/realms/demojs/broker/github/endpoint
-
 [source,bash,subs="+macros,+attributes"]
 ----
-e.g. homepage url: http://js-console-sso-app-demo.apps.cph-e31a.open.redhat.com
-e.g. Authorizaiton call back url: https://sso1-sso-app-demo.apps.cph-e31a.open.redhat.com/auth/realms/demojs/broker/github/endpoint
-https://<SERVER_URL>/auth/realms/demojs/broker/github/endpoint
+Application name: Keycloak
+Homepage URL: http://js-console-{{ USER_ID }}-keycloak.{{ ROUTE_SUBDOMAIN }}
+Authorization callback URL: https://sso-{{ USER_ID }}-keycloak.{{ ROUTE_SUBDOMAIN }}/auth/realms/demojs/broker/github/endpoint
 ----
 
 - Now copy the value for Client ID and Client Secret from GitHub to the Red Hat SSO Admin Console.

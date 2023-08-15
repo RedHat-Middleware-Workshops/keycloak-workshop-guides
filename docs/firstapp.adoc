@@ -126,15 +126,10 @@ In our case we use `kc.login(login)` which then redirects itself to the RH-SSO s
 
 Make sure you copy your SSO server URL (created in the previous section):
 e.g. in my case it looks something like this:
-
-[source,bash,role="copypaste"]
-----
-oc get route sso
-----
-
 ```
-NAME   HOST/PORT                                        PATH   SERVICES   
-sso    sso-workshop.apps.cph-c747.open.redhat.com       sso        <all>
+> oc get route sso
+NAME   HOST/PORT                                              PATH   SERVICES   
+sso    sso-{{ USER_ID }}-keycloak.{{ ROUTE_SUBDOMAIN }}       sso        <all>
 ```
 
 or just copy it from your browser, ensure you copy the protocol also e.g. 'https://...'
@@ -142,11 +137,11 @@ or just copy it from your browser, ensure you copy the protocol also e.g. 'https
 Now open the `js-console/src/keycloak.json`
 
 Change the following line "auth-server-url" with your SERVER_URL
-[source, js]
+[source, js,role="copypaste"]
 ----
 {
   "realm" : "demojs",
-  "auth-server-url" : "<SERVER_URL>/auth",
+  "auth-server-url" : "https://sso-{{ USER_ID }}-keycloak.{{ ROUTE_SUBDOMAIN }}/auth",
   "resource" : "js-console"
 }
 
@@ -154,12 +149,15 @@ Change the following line "auth-server-url" with your SERVER_URL
 
 Next open the `js-console/src/index.html`
 And replace the SERVER_URL in the <header> <src>
-For example:
-```
 
-    <script src="https://sso-workshop.apps.cph-c747.open.redhat.com/auth/js/keycloak.js"></script>
+Your server URL should be as follows
 
-```
+[source, js,role="copypaste"]
+----
+
+    <script src="https://sso-{{ USER_ID }}-keycloak.{{ ROUTE_SUBDOMAIN }}/auth/js/keycloak.js"></script>
+
+----
 
 
 Now that you have the basic config in place, lets go ahead and deploy our applicaton.
@@ -170,29 +168,28 @@ We also use the httpd image-stream provided by default with OpenShift. This is t
 *before starting make sure that you have Code Ready workspace `Terminal` open. 
 
 - and also ensure that you have changed you directory too `js-console/src`
-
-[source,bash,subs="+macros,+attributes",role="copypaste"]
+[source,bash,subs="+macros,+attributes"]
 ----
+
 oc new-build --name js-console --binary --strategy source --image-stream httpd
 ----
 
 Ok, so `oc new-build` should have set the right directives for our applicaiton. i.e. `js-console` which uses the httpd stream.
 
 Lets start our build; in the following command we specify that our build will be from our local source dir.
-
-[source,bash,subs="+macros,+attributes",role="copypaste"]
+[source,bash,subs="+macros,+attributes"]
 ----
 oc start-build js-console --from-dir . --follow
 ----
 
 Once our build is successfull, lets create a new app with that build; this will be our js-console app.
-[source,bash,subs="+macros,+attributes",role="copypaste"]
+[source,bash,subs="+macros,+attributes"]
 ----
 oc new-app --image-stream=js-console:latest
 ----
 
 And finally expose a route for our service so that we can connect to it externally.
-[source,bash,subs="+macros,+attributes",role="copypaste"]
+[source,bash,subs="+macros,+attributes"]
 ----
 
 oc expose svc/js-console
@@ -212,7 +209,7 @@ Then Click the `Create` button
 Following is the information you need to fill. 
 To get the route to your js-console you can run the following command.
 
-[source,bash,subs="+macros,+attributes",role="copypaste"]
+[source,bash,subs="+macros,+attributes"]
 ----
 oc get route js-console
 ----

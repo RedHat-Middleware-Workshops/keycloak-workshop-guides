@@ -198,7 +198,7 @@ quarkus.hibernate-orm.database.generation=drop-and-create
 quarkus.hibernate-orm.sql-load-script=import.sql <3>
 quarkus.datasource.username=quarkus
 quarkus.datasource.password=quarkus
-quarkus.datasource.jdbc.url=jdbc:postgresql://books-database:5432/books<1> 
+quarkus.datasource.jdbc.url=jdbc:postgresql://books-database:5432/books <1> 
 quarkus.datasource.db-kind=postgresql
 
 quarkus.http.cors=true
@@ -247,31 +247,21 @@ Run the following command in the terminal
 This should render an output with JSON output with details of books. You can hit the same URL in your browser and it should just render the JSON itself.
 
 Lets add try to do a couple more operations to the
-
-## Gets all books
-[source,sh,role="copypaste"]
+[source,sh]
 ----
+# Gets all books
  curl -X GET http://crud-oidc-{{ USER_ID }}-keycloak.{{ ROUTE_SUBDOMAIN }}/books
-----
-## Get one book
-[source,sh,role="copypaste"]
-----
-curl -X GET http://crud-oidc-{{ USER_ID }}-keycloak.{{ ROUTE_SUBDOMAIN }}/books/978-0-321-96551-6
-----
-## Delete a book
-[source,sh,role="copypaste"]
-----
-curl -X DELETE http://crud-oidc-{{ USER_ID }}-keycloak.{{ ROUTE_SUBDOMAIN }}/books/978-0-321-96551-6
-----
-## Create a new book
-[source,sh,role="copypaste"]
-----
-curl -X POST -H 'Content-Type: application/json' http://crud-oidc-{{ USER_ID }}-keycloak.{{ ROUTE_SUBDOMAIN }}/books -d @temp.json
-----
 
-## Update a book
-[source,sh,role="copypaste"]
-----
+# Get one book
+curl -X GET http://crud-oidc-{{ USER_ID }}-keycloak.{{ ROUTE_SUBDOMAIN }}/books/978-0-321-96551-6
+
+# Delete a book
+curl -X DELETE http://crud-oidc-{{ USER_ID }}-keycloak.{{ ROUTE_SUBDOMAIN }}/books/978-0-321-96551-6
+
+# Create a new book
+curl -X POST -H 'Content-Type: application/json' http://crud-oidc-{{ USER_ID }}-keycloak.{{ ROUTE_SUBDOMAIN }}/books -d @temp.json
+
+# Update a book
 curl -X PUT -H 'Content-Type: application/json' http://crud-oidc-{{ USER_ID }}-keycloak.{{ ROUTE_SUBDOMAIN }}/books/978-0-321-96551-7 -d @temp.json
 ----
 
@@ -305,9 +295,9 @@ Perfect! Now we are at a point that we need to configure our backend service to 
 
 [source, shell]
 ----
-quarkus.oidc.auth-server-url=https://sso-{{ USER_ID }}-keycloak.{{ ROUTE_SUBDOMAIN }}/auth/realms/quarkus<1> 
-quarkus.oidc.client-id=backend-service<2> 
-quarkus.oidc.credentials.secret=secret<3> 
+#quarkus.oidc.auth-server-url=https://sso-{{ USER_ID }}-keycloak.{{ ROUTE_SUBDOMAIN }}/auth/realms/quarkus <1> 
+#quarkus.oidc.client-id=backend-service <2> 
+#quarkus.oidc.credentials.secret=secret <3> 
 ----
 Copy the above properties in the `application.properties` file.
 <1> is the authenticatin url that our Quarkus application will use to establish authentication.
@@ -380,32 +370,23 @@ As a first we need to first authenticate with SSO to ensure we have a valid toke
 
 Now lets try to curl our endpoints again but this time with the addition of `Authentication: Bearer token`. This will add the our authentication token for user alice into our request.
 
-## Gets all books
-[source,sh,role="copypaste"]
+[source,sh]
 ----
+# Gets all books
 curl -X GET http://crud-oidc-{{ USER_ID }}-keycloak.{{ ROUTE_SUBDOMAIN }}/books -H "Authorization: Bearer "$access_token -v
-----
-## Get one book
-[source,sh,role="copypaste"]
-----
+
+# Get one book
 curl -X GET http://crud-oidc-{{ USER_ID }}-keycloak.{{ ROUTE_SUBDOMAIN }}/books/978-0-321-96551-6 -H "Authorization: Bearer "$access_token -v
-----
-## Delete a book
-[source,sh,role="copypaste"]
-----
+
+# Delete a book
 curl -X DELETE http://crud-oidc-{{ USER_ID }}-keycloak.{{ ROUTE_SUBDOMAIN }}/books/978-0-321-96551-6 -H "Authorization: Bearer "$access_token -v
-----
 
-## Create a new book
-[source,sh,role="copypaste"]
-----
+# Create a new book
 curl -X POST -H 'Content-Type: application/json' http://crud-oidc-{{ USER_ID }}-keycloak.{{ ROUTE_SUBDOMAIN }}/books -d @temp.json -H "Authorization: Bearer "$access_token -v
-----
 
-## Update a book
-[source,sh,role="copypaste"]
-----
+# Update a book
 curl -X PUT -H 'Content-Type: application/json' http://crud-oidc-{{ USER_ID }}-keycloak.{{ ROUTE_SUBDOMAIN }}/books/978-0-321-96551-7 -d @temp.json -H "Authorization: Bearer "$access_token -v
+
 ----
 
 At this point we have all our end points allowing the role user. But maybe we dont want. What if we want the `DELETE, PUT, POST` to have a different user role to ensure its only done by a privilaged user. With Quarkus OIDC its possible to do this too. Lets replace our `DELETE, POST, PUT` @RolesAllowed annotations as follows.
