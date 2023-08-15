@@ -48,7 +48,17 @@ These templates contain environment variables specific to Red Hat Single Sign-On
 Make sure that you have completed the setting up instructions before moving forward in this section. 
 
 Lets first take a look at the installed templates:
-Run the following command:
+
+Open up a terminal and run the following command, to navigate to our project.
+
+image::new-terminal.png[new-terminal, 800]
+
+[source,bash,subs="+macros,+attributes"]
+----
+oc project user1-keycloak
+----
+
+to list all the templates we are going to use in these labs - Run the following command:
 [source,bash,subs="+macros,+attributes"]
 ----
 oc get templates -n openshift -o name | grep -o 'sso75.\+'
