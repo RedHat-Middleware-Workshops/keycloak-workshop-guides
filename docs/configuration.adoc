@@ -23,7 +23,7 @@ It is possible to disable the master realm and define admin accounts within each
 With Single Sign-On we expect there will be users logging in, there is integration to OAuth etc. Obviously we need to have an email integration so SSO server can send verfication emails etc. 
 
 To start lets setup a mail server that has a catchall and is only used for testing. 
-MailCatcher runs a super simple SMTP server which catches any message sent to it to display in a web interface. By running mailcatcher we can get all the emails within our setup for testing and we wont need to use our personal or corporate emails for this. Its a great utility. the mail server is setup on port '1025' and the html interface to recieve and send should be setup on port '8080'. Lets create our test mail server by running the following commands. To this click on the workbench icon on the right hand side in your CodeReady Workspace.
+MailCatcher runs a super simple SMTP server which catches any message sent to it to display in a web interface. By running mailcatcher we can get all the emails within our setup for testing and we wont need to use our personal or corporate emails for this. Its a great utility. the mail server is setup on port '1025' and the html interface to recieve and send should be setup on port '8080'. Lets create our test mail server by running the following commands. To this click on the workbench icon on the right hand side in your DevSpaces Workspace.
 
 
 image::crw_right_workbench.png[Workbench]

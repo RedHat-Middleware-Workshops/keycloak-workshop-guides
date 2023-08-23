@@ -113,7 +113,7 @@ We also have a keycloak.json file that we also use to configure our application.
 
 Alternatively you can also choose to place the json file in a different location and also load the js files manually in your code. In our case we take a simplified approach by taking he js file directly from the server and our keycloak.json file is in the root. (not in the root of our current project, but will be in root of our app when we deploy it.)
 
-In the workshop source code, locate the `js-console` and navigate to the directory in your CodeReady workspace.
+In the workshop source code, locate the `js-console` and navigate to the directory in your DevSpaces workspace.
 
 [#firstapp-authentication]
 === Authentication via JS

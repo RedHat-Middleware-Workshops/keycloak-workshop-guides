@@ -47,7 +47,7 @@ Paste the above code into our Books.java class
 
 [source,java,role="copypaste"]
 ----
-    <1> public static List<Book> getAll(){
+    public static List<Book> getAll(){ <1>
         return listAll();
     } 
 
@@ -158,7 +158,7 @@ Great! Now we have an Entity to store the data in our PostgreSQL database and a 
 
 Before we start to deploy our application we also need to deploy that database to the OpenShift cluster so that are code and reference it and store values into it.
 
-The following command will create a database called `books-database` and thats how we will reference it in our app settings later on as well. Run this command in your `CodeReady terminal`
+The following command will create a database called `books-database` and thats how we will reference it in our app settings later on as well. Run this command in your `DevSpaces terminal`
 
 [source,sh,role="copypaste"]
 ----
@@ -166,7 +166,7 @@ The following command will create a database called `books-database` and thats h
 oc new-app -e POSTGRESQL_USER=quarkus \
     -e POSTGRESQL_PASSWORD=quarkus \
     -e POSTGRESQL_DATABASE=books \
-    OpenShift/postgresql:latest \
+    openshift/postgresql:latest \
     --name=books-database
 ----
 
@@ -190,20 +190,20 @@ If you go back to the developer console `Topology view` in OpenShift you should 
 image::OpenShift_pg_deploy.png[OpenShift posgtresdb deploy]
 
 
-Perfect! now we have our database deployed. Lets also deploy the application. For that we will first need to ensure we have the right database configuration. Quarkus uses its pre-built OpenShift extension to deploy apps to OpenShift. This way the developer does not need to worry about all the different Kubernetes manifests/yaml files that needs to be created. Its taken care of by Quarkus. This is great, because now all we need to do is give some parameters into our application.properties and we are all set to deploy. Open up the `application.properties` file in your CodeReady workspace. You should be able to find it on this path `crud-oidc/src/main/resources/application.properties`.
+Perfect! now we have our database deployed. Lets also deploy the application. For that we will first need to ensure we have the right database configuration. Quarkus uses its pre-built OpenShift extension to deploy apps to OpenShift. This way the developer does not need to worry about all the different Kubernetes manifests/yaml files that needs to be created. Its taken care of by Quarkus. This is great, because now all we need to do is give some parameters into our application.properties and we are all set to deploy. Open up the `application.properties` file in your DevSpaces workspace. You should be able to find it on this path `crud-oidc/src/main/resources/application.properties`.
 
 [source,sh,role="copypaste"]
 ----
 quarkus.hibernate-orm.database.generation=drop-and-create
-quarkus.hibernate-orm.sql-load-script=import.sql <3>
+quarkus.hibernate-orm.sql-load-script=import.sql<3>
 quarkus.datasource.username=quarkus
 quarkus.datasource.password=quarkus
-quarkus.datasource.jdbc.url=jdbc:postgresql://books-database:5432/books <1> 
+quarkus.datasource.jdbc.url=jdbc:postgresql://books-database:5432/books<1>
 quarkus.datasource.db-kind=postgresql
 
 quarkus.http.cors=true
 quarkus.kubernetes-client.trust-certs=true
-quarkus.openshift.route.expose=true <2> 
+quarkus.openshift.route.expose=true<2>
 ----
 
 <1> This is the resource we are trying to hit. in our case its the `books-database` instance of PostgreSQL and the name of the datbase is books. which is listening to the default port of 5432. This database is not exposed outside our namespace.
@@ -226,7 +226,7 @@ Now that we have all the configuration set, lets deploy our application to OpenS
 
 <6> Finally create a public route to our service.
 
-Lets run this command in the `CodeReady Terminal`. Make sure you are in the project directory crud-oidc when you do this.
+Lets run this command in the `DevSpaces Terminal`. Make sure you are in the project directory crud-oidc when you do this.
 
 [source,sh,role="copypaste"]
 ----
@@ -235,7 +235,7 @@ Lets run this command in the `CodeReady Terminal`. Make sure you are in the proj
 
 The command will take a few seconds to run. While we wait for it to complete. You can also check the status in the Openshift developer console.
 
-Okay lets head back to our CodeReady and check if our service brought the data we require. 
+Okay lets head back to our DevSpaces and check if our service brought the data we require. 
 
 Run the following command in the terminal
 
