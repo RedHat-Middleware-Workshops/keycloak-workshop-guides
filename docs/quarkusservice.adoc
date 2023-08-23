@@ -47,7 +47,7 @@ Paste the above code into our Books.java class
 
 [source,java,role="copypaste"]
 ----
-    <1> public static List<Book> getAll(){
+    public static List<Book> getAll(){ <1>
         return listAll();
     } 
 
@@ -166,7 +166,7 @@ The following command will create a database called `books-database` and thats h
 oc new-app -e POSTGRESQL_USER=quarkus \
     -e POSTGRESQL_PASSWORD=quarkus \
     -e POSTGRESQL_DATABASE=books \
-    OpenShift/postgresql:latest \
+    openshift/postgresql:latest \
     --name=books-database
 ----
 
@@ -195,15 +195,15 @@ Perfect! now we have our database deployed. Lets also deploy the application. Fo
 [source,sh,role="copypaste"]
 ----
 quarkus.hibernate-orm.database.generation=drop-and-create
-quarkus.hibernate-orm.sql-load-script=import.sql <3>
+quarkus.hibernate-orm.sql-load-script=import.sql<3>
 quarkus.datasource.username=quarkus
 quarkus.datasource.password=quarkus
-quarkus.datasource.jdbc.url=jdbc:postgresql://books-database:5432/books <1> 
+quarkus.datasource.jdbc.url=jdbc:postgresql://books-database:5432/books<1>
 quarkus.datasource.db-kind=postgresql
 
 quarkus.http.cors=true
 quarkus.kubernetes-client.trust-certs=true
-quarkus.openshift.route.expose=true <2> 
+quarkus.openshift.route.expose=true<2>
 ----
 
 <1> This is the resource we are trying to hit. in our case its the `books-database` instance of PostgreSQL and the name of the datbase is books. which is listening to the default port of 5432. This database is not exposed outside our namespace.
