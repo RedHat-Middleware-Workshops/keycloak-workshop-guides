@@ -16,7 +16,7 @@ services:
     environment:  
       - MASTER_URL=http://your.master.com:1111
       - CONSOLE_URL=http://your.console.url.com:2222
-      - CHE_URL=http://codeready.url.com:3333   
+      - CHE_URL=http://DevSpaces.url.com:3333   
       - RHAMT_URL=http://foo  - CHE_USER_PASSWORD='r3dh4t1!'
       - KEYCLOAK_URL=http://keycloak.url.com:4444
       - ROUTE_SUBDOMAIN=apps.yoursubdomain.com
