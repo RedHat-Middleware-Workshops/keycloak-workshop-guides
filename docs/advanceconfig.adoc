@@ -147,20 +147,20 @@ Remember to `replace evalsXX with your username` and also ensure you are in the 
 oc new-project <evalsXX>-sso-custom-kubernetes-workshop
 
 # Create a build directive with Red Hat SSO official image stream.
-oc new-build --name custom-sso73-OpenShift --binary --strategy source --image-stream redhat-sso73-OpenShift:1.0
+oc new-build --name custom-sso76-OpenShift --binary --strategy source --image-stream redhat-sso76-OpenShift:1.0
 
 # Start the custom build
-oc start-build custom-sso73-OpenShift --from-dir . --follow
+oc start-build custom-sso76-OpenShift --from-dir . --follow
 ----
 
 Switch to this new project in your OpenShift console. the rest of the guide assumes the new SSO instance in this project.
 
 You can now also run `oc get imagestreams` which should render a similar output as follows.
-Notice that we have named our custom image as `custom-sso73-OpenShift`. 
+Notice that we have named our custom image as `custom-sso76-OpenShift`. 
 
 [source,bash,subs="+macros,+attributes"]
 ----
-custom-sso73-OpenShift  docker-registry.default.svc:5000/.../custom-sso73-OpenShift   
+custom-sso76-OpenShift  docker-registry.default.svc:5000/.../custom-sso76-OpenShift   
 ----
 
 Now that have the image ready to be deplyed we need to take one last step.

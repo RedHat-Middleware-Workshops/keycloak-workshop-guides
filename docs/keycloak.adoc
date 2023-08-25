@@ -21,17 +21,17 @@ These define the resources needed to develop Red Hat Single Sign-On 7.5.GA serve
 
 Templates using HTTPS and JGroups keystores and a truststore for the Red Hat Single Sign-On server, all prepared beforehand. These secure the TLS communication using passthrough TLS termination:
 
-    - sso75-https: Red Hat Single Sign-On 7.5.GA backed by internal H2 database on the same pod.
+    - sso76-https: Red Hat Single Sign-On 7.5.GA backed by internal H2 database on the same pod.
        
-    - sso75-postgresql: Red Hat Single Sign-On 7.5.GA backed by ephemeral PostgreSQL database on a separate pod.
+    - sso76-postgresql: Red Hat Single Sign-On 7.5.GA backed by ephemeral PostgreSQL database on a separate pod.
         
-    - sso75-postgresql-persistent: Red Hat Single Sign-On 7.5.GA backed by persistent PostgreSQL database on a separate pod. 
+    - sso76-postgresql-persistent: Red Hat Single Sign-On 7.5.GA backed by persistent PostgreSQL database on a separate pod. 
 
 Templates using OpenShift’s internal service serving x509 certificate secrets to automatically create the HTTPS keystore used for serving secure content. The JGroups cluster traffic is authenticated using the AUTH protocol and encrypted using the ASYM_ENCRYPT protocol. The Red Hat Single Sign-On server truststore is also created automatically, containing the /var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt CA certificate file, which is used to sign the certificate for HTTPS keystore. Moreover, the truststore for the Red Hat Single Sign-On server is pre-populated with the all known, trusted CA certificate files found in the Java system path. These templates secure the TLS communication using re-encryption TLS termination:
 
-    - sso75-x509-https: Red Hat Single Sign-On 7.5.GA with auto-generated HTTPS keystore and Red Hat Single Sign-On truststore, backed by internal H2 database. The ASYM_ENCRYPT JGroups protocol is used for encryption of cluster traffic.
+    - sso76-x509-https: Red Hat Single Sign-On 7.5.GA with auto-generated HTTPS keystore and Red Hat Single Sign-On truststore, backed by internal H2 database. The ASYM_ENCRYPT JGroups protocol is used for encryption of cluster traffic.
     
-    - sso75-x509-postgresql-persistent: Red Hat Single Sign-On 7.5.GA with auto-generated HTTPS keystore and Red Hat Single Sign-On truststore, backed by persistent PostgreSQL database. The ASYM_ENCRYPT JGroups protocol is used for encryption of cluster traffic. 
+    - sso76-x509-postgresql-persistent: Red Hat Single Sign-On 7.5.GA with auto-generated HTTPS keystore and Red Hat Single Sign-On truststore, backed by persistent PostgreSQL database. The ASYM_ENCRYPT JGroups protocol is used for encryption of cluster traffic. 
 
 Other templates that integrate with Red Hat Single Sign-On are also available:
 
@@ -61,18 +61,18 @@ oc project user1-keycloak
 to list all the templates we are going to use in these labs - Run the following command:
 [source,bash,subs="+macros,+attributes"]
 ----
-oc get templates -n openshift -o name | grep -o 'sso75.\+'
+oc get templates -n openshift -o name | grep -o 'sso76.\+'
 ----
 
 Which should result in the following output; these are the list of templates installed on this OpenShift cluster. We could also change the above expression to sso72 and would get the similar output for the SSO 7.2 release templates.
 
 [source,bash,subs="+macros,+attributes"]
 ----
-sso75-https
-sso75-ocp4-x509-https
-sso75-ocp4-x509-postgresql-persistent
-sso75-postgresql
-sso75-postgresql-persistent
+sso76-https
+sso76-ocp4-x509-https
+sso76-ocp4-x509-postgresql-persistent
+sso76-postgresql
+sso76-postgresql-persistent
 ----
 
 
